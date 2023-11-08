@@ -124,7 +124,11 @@ func main() {
 	defer close(tunnelOutCh)
 	var tunnelCmdList []TunnelCmd
 	for _, port := range portList {
-		cmd := GetCmd(cloudflaredFilename + " tunnel --url http://127.0.0.1:" + strconv.Itoa(port))
+		prefix := ""
+		if runtime.GOOS == "linux" {
+			prefix = "./"
+		}
+		cmd := GetCmd(prefix + cloudflaredFilename + " tunnel --url http://127.0.0.1:" + strconv.Itoa(port))
 		out := &bytes.Buffer{}
 		cmd.Stdout = out
 		cmd.Stderr = out
@@ -177,7 +181,7 @@ func main() {
 	for _, cmd := range tunnelCmdList {
 		err := cmd.Cmd.Wait()
 		if err != nil {
-			slog.Error("cloudflared exited", "port", cmd.Port)
+			slog.Error("cloudflared exited", "port", cmd.Port, "error", err)
 		}
 	}
 }
