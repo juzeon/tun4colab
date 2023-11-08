@@ -2,6 +2,14 @@
 
 A helper program that allows for parallel execution of API services and utilizes Cloudflare Quick Tunnel for port forwarding on Google Colab.
 
+## Build
+
+Requires Go 1.21+
+
+```bash
+go build
+```
+
 ## Usage
 
 ```bash
