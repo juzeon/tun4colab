@@ -92,6 +92,14 @@ func main() {
 				panic(err)
 			}
 			slog.Info("Downloading cloudflared completed")
+			if runtime.GOOS == "linux" {
+				slog.Info("Setting permission...")
+				err = SetExecutable(cloudflaredFilename)
+				if err != nil {
+					panic(err)
+				}
+				slog.Info("Permission is set")
+			}
 		} else {
 			panic(err)
 		}
@@ -179,4 +187,11 @@ func GetCmd(command string) *exec.Cmd {
 	} else {
 		return exec.Command("/bin/sh", "-c", command)
 	}
+}
+func SetExecutable(filename string) error {
+	_, err := GetCmd("chmod +x " + filename).CombinedOutput()
+	if err != nil {
+		return err
+	}
+	return nil
 }
