@@ -7,6 +7,11 @@ A helper program that allows for parallel execution of API services and utilizes
 Requires Go 1.21+
 
 ```bash
+# If using Windows
+set GOOS=linux
+set GOARCH=amd64
+
+# Build for colab
 go build
 ```
 
