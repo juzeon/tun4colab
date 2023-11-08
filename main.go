@@ -26,6 +26,10 @@ type TunnelCmd struct {
 }
 
 func main() {
+	if len(os.Args) <= 1 {
+		PrintUsage()
+		return
+	}
 	var commandList []string
 	var portList []int
 	for i, arg := range os.Args {
